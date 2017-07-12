@@ -1,0 +1,1 @@
+Le model home est récupéré depuis le dossier "common".
