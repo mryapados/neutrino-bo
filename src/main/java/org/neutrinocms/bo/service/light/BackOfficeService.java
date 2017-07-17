@@ -167,6 +167,12 @@ public class BackOfficeService {
 		return nField;
 	}
 	
+	
+	public List<NField> getNFields(Class<?> entity) throws ServiceException{		
+		List<Field> fields = getFields(entity);
+		return getNFields(fields);
+	}	
+	
 	private List<NField> getNFields(List<Field> fields) throws ServiceException {
 		List<NField> nfFields = new ArrayList<>();
 		for (Field field : fields) {
@@ -247,15 +253,7 @@ public class BackOfficeService {
 		pageable = transformPageRequest(nFields, pageable);
 		return new NDatas<IdProvider>(nFields, idProviderUtil.getFullObjects(entity, pageable, spec));
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		
 	private Pageable transformPageRequest(List<NField> nfFields, Pageable pageRequest){
 		Sort sort = pageRequest.getSort();
 		Map<Integer, Sort> treeMap = new TreeMap<>();
