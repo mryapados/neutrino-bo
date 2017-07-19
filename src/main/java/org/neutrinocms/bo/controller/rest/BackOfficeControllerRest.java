@@ -48,7 +48,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 @RequestMapping(value = CommonUtil.BO_URL + BackOfficeControllerRest.BO_API_URI)
-@Secured({ "ROLE_WEBMASTER", "ROLE_ADMIN", "ROLE_BO" })
+//@Secured({ "ROLE_WEBMASTER", "ROLE_ADMIN", "ROLE_BO" })
 public class BackOfficeControllerRest {
 	
 	protected static final String BO_API_URI = "resources/";
