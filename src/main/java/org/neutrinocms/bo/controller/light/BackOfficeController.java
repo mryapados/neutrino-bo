@@ -30,7 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
-@RequestMapping(value = CommonUtil.BO_URL)
+@RequestMapping(value = "${bo.url}")
 @Secured({ "ROLE_WEBMASTER", "ROLE_ADMIN", "ROLE_BO" })
 public abstract class BackOfficeController extends AbstractController {
 	

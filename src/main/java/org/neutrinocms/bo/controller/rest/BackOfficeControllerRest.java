@@ -47,7 +47,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 @RestController
-@RequestMapping(value = CommonUtil.BO_URL + BackOfficeControllerRest.BO_API_URI)
+@RequestMapping(value = "${api.url}/${bo.url}")
 //@Secured({ "ROLE_WEBMASTER", "ROLE_ADMIN", "ROLE_BO" })
 public class BackOfficeControllerRest {
 	

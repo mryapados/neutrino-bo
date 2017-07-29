@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.neutrinocms.core.bean.NData;
+import org.neutrinocms.core.conf.NeutrinoCoreProperties;
 import org.neutrinocms.core.exception.ControllerException;
 import org.neutrinocms.core.exception.ResourceNotFoundException;
 import org.neutrinocms.core.exception.ServiceException;
@@ -13,6 +14,7 @@ import org.neutrinocms.core.model.notranslation.NoTranslation;
 import org.neutrinocms.core.model.translation.Lang;
 import org.neutrinocms.core.model.translation.Translation;
 import org.neutrinocms.core.util.CommonUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -24,6 +26,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class BackOfficeControllerEdit extends BackOfficeController {
+	@Autowired
+	NeutrinoCoreProperties neutrinoCoreProperties;
+	
 	protected static final String REDIRECT = "redirect:/";
 	protected static final String REDIRECT_TYPE = "type";
 	protected static final String REDIRECT_ID = "id";
@@ -56,7 +61,7 @@ public class BackOfficeControllerEdit extends BackOfficeController {
 		} else{
 			try {
 				IdProvider idProvider = backOfficeService.saveData(data);
-				modelAndView = new ModelAndView(REDIRECT + CommonUtil.BO_URL + BO_VIEW_URL);
+				modelAndView = new ModelAndView(REDIRECT + neutrinoCoreProperties.getBoUrl() + BO_VIEW_URL);
 				redirectAttributes.addAttribute(REDIRECT_TYPE, idProvider.getObjectType());
 				redirectAttributes.addAttribute(REDIRECT_ID, idProvider.getId());
 				
@@ -125,7 +130,7 @@ public class BackOfficeControllerEdit extends BackOfficeController {
 			if (lang == null) throw new ResourceNotFoundException(langCode + " Not found !");	
 			if (id == null) return edit(type, id, lang, false);
 			IdProvider added = copy(type, id, lang);
-			ModelAndView modelAndView = new ModelAndView(REDIRECT + CommonUtil.BO_URL + BO_EDIT_URL);
+			ModelAndView modelAndView = new ModelAndView(REDIRECT + neutrinoCoreProperties.getBoUrl() + BO_EDIT_URL);
 			redirectAttributes.addAttribute(REDIRECT_TYPE, added.getObjectType());
 			redirectAttributes.addAttribute(REDIRECT_ID, added.getId());
 			return modelAndView;
@@ -138,7 +143,7 @@ public class BackOfficeControllerEdit extends BackOfficeController {
 	public ModelAndView add(@RequestParam(ATTR_TYPE) String type, @RequestParam(value = ATTR_ID, required = false) Integer id, HttpServletRequest request, RedirectAttributes redirectAttributes) throws ControllerException, ResourceNotFoundException   {
 		if (id == null) return edit(type, id, null, false);
 		IdProvider added = copy(type, id, null);
-		ModelAndView modelAndView = new ModelAndView(REDIRECT + CommonUtil.BO_URL + BO_EDIT_URL);
+		ModelAndView modelAndView = new ModelAndView(REDIRECT + neutrinoCoreProperties.getBoUrl() + BO_EDIT_URL);
 		redirectAttributes.addAttribute(REDIRECT_TYPE, added.getObjectType());
 		redirectAttributes.addAttribute(REDIRECT_ID, added.getId());
 		return modelAndView;
@@ -159,7 +164,7 @@ public class BackOfficeControllerEdit extends BackOfficeController {
 					Translation translation = (Translation) backOfficeService.translate((Translation) data, lang);
 					translation = (Translation) backOfficeService.saveData(translation);
 					
-					modelAndView = new ModelAndView(REDIRECT + CommonUtil.BO_URL + BO_VIEW_URL);
+					modelAndView = new ModelAndView(REDIRECT + neutrinoCoreProperties.getBoUrl() + BO_VIEW_URL);
 					redirectAttributes.addAttribute(REDIRECT_TYPE, translation.getObjectType());
 					redirectAttributes.addAttribute(REDIRECT_ID, translation.getId());
 					
@@ -183,7 +188,7 @@ public class BackOfficeControllerEdit extends BackOfficeController {
 			try {
 				IdProvider idProvider = backOfficeService.saveData(data);					
 				
-				modelAndView = new ModelAndView(REDIRECT + CommonUtil.BO_URL + BO_VIEW_URL);
+				modelAndView = new ModelAndView(REDIRECT + neutrinoCoreProperties.getBoUrl() + BO_VIEW_URL);
 				redirectAttributes.addAttribute(REDIRECT_TYPE, idProvider.getObjectType());
 				redirectAttributes.addAttribute(REDIRECT_ID, idProvider.getId());
 				

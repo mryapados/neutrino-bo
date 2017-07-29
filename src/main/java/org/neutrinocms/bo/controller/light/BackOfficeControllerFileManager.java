@@ -11,6 +11,7 @@ import org.neutrinocms.bo.wrapper.light.MoveRequestWrapper;
 import org.neutrinocms.bo.wrapper.light.RemoveRequestWrapper;
 import org.neutrinocms.bo.wrapper.light.ResultEncapsulatorWrapper;
 import org.neutrinocms.core.bean.NFile;
+import org.neutrinocms.core.conf.NeutrinoCoreProperties;
 import org.neutrinocms.core.exception.ControllerException;
 import org.neutrinocms.core.exception.ResourceNotFoundException;
 import org.neutrinocms.core.exception.ServiceException;
@@ -32,8 +33,10 @@ import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping(value = CommonUtil.BO_URL + CommonUtil.BO_FILE_URL)
+@RequestMapping(value = "${bo.url}" + CommonUtil.BO_FILE_URL)
 public class BackOfficeControllerFileManager extends BackOfficeController {
+	@Autowired
+	NeutrinoCoreProperties neutrinoCoreProperties;	
 	
 	protected static final String BO_FILE_PARAM_ACTION = "action";
 	protected static final String BO_FILE_PARAM_PATH = "path";
