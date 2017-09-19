@@ -65,16 +65,13 @@
 											<c:param name="type" value="${objectType}"/>
 											<c:param name="id" value="${objectView.id}"/>
 										</c:url>
-										<a href="${url}" title="edit"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+										<a href="<%= request.getAttribute("url") %>" title="edit"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
 										&nbsp
 										<c:url var="url" value="${boContext}/view/" scope="request">
 											<c:param name="type" value="${param.type}"/>
 											<c:param name="id" value="${objectView.id}"/>
 										</c:url>
-										<a href="${url}" title="see"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
-<%-- 										<% System.out.println("boContext = " + request.getAttribute("boContext")); %> --%>
-<%-- 										<% System.out.println("url = " + request.getAttribute("url")); %> --%>
-										
+										<a href="<%= request.getAttribute("url") %>" title="see"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
 									</td>
 									<c:forEach var="field" items="${fields}" varStatus="status">
 										<c:if test="${field.inList}">

@@ -1,0 +1,22 @@
+<form name="templateForm" class="form-horizontal" role="form">
+    <div class="modal-header">
+	    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	    	<span aria-hidden="true">&times;</span>
+	    </button>
+	    <h4 class="modal-title">{{'block-management.choice.scope' | translate}}</h4>
+    </div>
+	<div class="modal-body">
+		<div class="row">
+			<div data-ng-if="buttons.activeModel" data-ng-class="['text-center', classCol]">
+				<button data-ng-click="scopeActiveModel()" class="btn btn-primary btn-small">{{'block-management.choice.scope.activeModel' | translate}}</button>
+			</div>
+			<div data-ng-if="buttons.activePage" data-ng-class="['text-center', classCol]">
+				<button data-ng-click="scopeActivePage()" class="btn btn-primary btn-small">{{'block-management.choice.scope.activePage' | translate}}</button>
+			</div>
+			<div data-ng-if="buttons.activeObject" data-ng-class="['text-center', classCol]">
+				<button data-ng-click="scopeActiveObject()" class="btn btn-primary btn-small">{{'block-management.choice.scope.activeObject' | translate}}</button>
+			</div>
+		</div>
+	</div> 
+</form>
+

@@ -60,7 +60,7 @@
 											<my:url var="url" value="${boViewUrl}" bean="${objectView}">
 												<my:param name="servername" value="${folder.name}" />
 											</my:url>
-											<a href="${url}" target="_blank"><c:out value="${folder.name}"/></a>
+											<a href="<%= pageContext.getAttribute("url") %>" target="_blank"><c:out value="${folder.name}"/></a>
 										</li>
 									</c:forEach>
 								</ul>

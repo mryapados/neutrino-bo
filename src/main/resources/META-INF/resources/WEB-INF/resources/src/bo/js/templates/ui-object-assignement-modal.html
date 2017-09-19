@@ -1,0 +1,23 @@
+<form name="templateForm" class="form-horizontal" role="form">
+    <div class="modal-header">
+	    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	    	<span aria-hidden="true">&times;</span>
+	    </button>
+	    <h4 class="modal-title">{{'block-management.type' | translate}} : {{template.template.name}}</h4>
+    </div>
+	<div class="modal-body">
+		<div data-ng-show="template.errors" class="alert alert-danger" role="alert">
+			<div data-ng-repeat="err in template.errors.data">
+				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+				<span class="sr-only">Error :</span>
+			  	{{err.defaultMessage}}
+			</div>
+		</div>
+		<div data-ng-include="urlMaked"></div> 
+	</div> 
+	<div class="modal-footer">
+	    <button data-ng-click="cancel()" class="btn btn-danger btn-small">Annuler</button>
+	    <button class="btn btn-success" data-ng-disabled="!templateForm.$dirty || templateForm.$invalid" data-ng-click="save(templateForm)">Modifier</button>
+	</div>
+</form>
+

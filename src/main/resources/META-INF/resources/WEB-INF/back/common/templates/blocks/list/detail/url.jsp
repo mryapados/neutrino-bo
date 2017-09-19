@@ -25,5 +25,5 @@
 	<c:if test="${not empty param.role}">
 		<c:set var="role" value='role="${param.role}"'/>
 	</c:if>
-	<a ${css}href="${url}"${role}>${param.expr}</a>
+	<a ${css}href="<%= request.getAttribute("url") %>"${role}>${param.expr}</a>
 </c:if>

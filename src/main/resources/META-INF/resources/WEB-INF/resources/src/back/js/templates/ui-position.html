@@ -1,0 +1,22 @@
+<div class="ui-position">
+	<div data-ng-show="debug" >
+		<p class="debug">PositionId = {{positionId}}</p>
+		<p class="debug">ModelId = {{modelId}}</p>
+		<p class="debug">ActiveObjectId = {{activeObjectId}}</p>
+	</div>
+	<div data-ng-if="blocks.length > 0" class="targetblock-add-element" data-drop="top" data-dropStyle="columnDrop"></div>
+	<div data-ng-class="{'targetblock-view-page' : model.kind === 'PAGE', 'targetblock-view-pageblock' : model.kind === 'PAGEBLOCK'}">
+		<div data-ng-if="blocks.length === 0">
+			<div class="targetblock-empty" data-drop data-dropStyle="columnDrop"></div>
+		</div>
+		<div data-ng-repeat="block in blocks">
+			<div class="edit">
+				<a href="#" data-ng-click="open(block)">{{'block-management.edit' | translate}}</a>
+				 - 
+				<a href="#" data-ng-click="remove($index)">{{'block-management.remove' | translate}}</a>
+			</div>
+			<data-ng-include src="getParsedBlock(block)"></data-ng-include>
+		</div>
+	</div>
+	<div data-ng-if="blocks.length > 0" class="targetblock-add-element" data-drop="bottom" data-dropStyle="columnDrop"></div>
+</div>

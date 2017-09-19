@@ -127,6 +127,11 @@
 			<form:input cssClass="form-control" type="${assignType}" path="${finalField.name}" ng-model="${finalField.name}" assign="${objectType}_${finalParentObject.id}_${finalField.name}" kind="file"/>
 		</c:if>
 	</c:when>
+	<c:when test="${finalFieldType eq 'IMAGE'}">
+		<c:if test="${empty isInCollection || not isInCollection}">
+			<form:input cssClass="form-control" type="${assignType}" path="${finalField.name}" ng-model="${finalField.name}" assign="${objectType}_${finalParentObject.id}_${finalField.name}" kind="file"/>
+		</c:if>
+	</c:when>
 	<c:when test="${finalFieldType eq 'OBJECT'}">
 		<c:if test="${empty finalObject}">
 			<span class="empty-field"><s:message code="bo.field.empty" text="Empty..." /></span>

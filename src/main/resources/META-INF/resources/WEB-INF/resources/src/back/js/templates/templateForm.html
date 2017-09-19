@@ -1,0 +1,72 @@
+<div class="form-group">
+	<label class="control-label col-sm-3" for="type">{{'block-management.form.type' | translate}} : </label>
+	<div class="col-sm-9">
+		<select class="form-control" id="type" data-ng-model="template.template.type" data-ng-change="exist()">
+			<option value="PAGE">{{'block-management.form.type.page' | translate}}</option>
+			<option value="BLOCK">{{'block-management.form.type.block' | translate}}</option>
+			<option value="PAGEBLOCK">{{'block-management.form.type.pageblock' | translate}}</option>
+		</select>
+	</div>
+</div>
+
+<div class="form-group required" data-ng-class="{'has-error has-feedback' : templateForm.name.$error.required}">
+	<label class="control-label col-sm-3" for="name">{{'block-management.form.name' | translate}} :</label>
+	<div class="col-sm-9">
+		<input type="text" class="form-control" id="name" name="name" placeholder="" data-ng-model="template.template.name" data-ng-change="exist()" required>
+	    <div data-ng-show="templateForm.name.$dirty">
+	        <span data-ng-show="templateForm.name.$error.required" class="glyphicon glyphicon-remove form-control-feedback"></span>	        
+			<div data-ng-show="templateForm.name.$error.required" class="alert alert-danger" role="alert">
+			  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+			  <span class="sr-only">Error:</span>
+			  {{'form.required' | translate}}
+			</div>
+	    </div>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="control-label col-sm-3" for="description">{{'block-management.form.description' | translate}} :</label>
+	<div class="col-sm-9">
+		<textarea class="form-control" rows="5" id="description" name="description" data-ng-model="template.template.description"></textarea>
+	</div>
+</div>
+
+<div class="form-group required" data-ng-class="{'has-error has-feedback' : templateForm.path.$error.required}">
+	<label class="control-label col-sm-3" for="path">{{'block-management.form.path' | translate}} :</label>
+	<div class="col-sm-9">
+		<input type="text" class="form-control" id="path" name="path" placeholder="" data-ng-model="template.template.path" data-ng-change="exist()" required>
+	    <div data-ng-show="templateForm.path.$dirty">
+	        <span data-ng-show="templateForm.path.$error.required" class="glyphicon glyphicon-remove form-control-feedback"></span>	        
+			<div data-ng-show="templateForm.path.$error.required" class="alert alert-danger" role="alert">
+			  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+			  <span class="sr-only">Error:</span>
+			  {{'form.required' | translate}}
+			</div>
+	    </div>
+	</div>
+</div>
+<div data-ng-show="!scriptExist.exist">
+	<div class="alert alert-warning" role="alert">
+		<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+		<span class="sr-only">Warning:</span>
+		{{'form.notfound.jsp' | translate}}{{scriptExist.path}}
+	</div>
+</div>
+<div class="form-group" data-ng-show="template.template.type === 'PAGE'">
+	<label class="control-label col-sm-3" for="metaDescription">{{'block-management.form.metaDescription' | translate}} :</label>
+	<div class="col-sm-9">
+		<textarea class="form-control" rows="2" id="metaDescription" name="metaDescription" data-ng-model="template.template.metaDescription"></textarea>
+	</div>
+</div>
+<div class="form-group" data-ng-show="template.template.type === 'PAGE'">
+	<label class="control-label col-sm-3" for="metaTitle">{{'block-management.form.metaTitle' | translate}} :</label>
+	<div class="col-sm-9">
+		<textarea class="form-control" rows="2" id="metaTitle" name="metaTitle" data-ng-model="template.template.metaTitle"></textarea>
+	</div>
+</div>
+<div class="form-group" data-ng-show="template.template.type === 'PAGE'">
+	<label class="control-label col-sm-3" for="keywords">{{'block-management.form.metaKeywords' | translate}} :</label>
+	<div class="col-sm-9">
+		<textarea class="form-control" rows="2" id="keywords" name="keywords" data-ng-model="template.template.metaKeywords"></textarea>
+	</div>
+</div>

@@ -18,7 +18,7 @@
 		
 		<jsp.version>2.2</jsp.version>
 		<jstl.version>1.2</jstl.version>
-		<jackson.version>2.7.3</jackson.version>
+		<jackson.library>2.7.5</jackson.library>
 		
         <springframework.version>4.3.9.RELEASE</springframework.version>
         <springsecurity.version>4.2.3.RELEASE</springsecurity.version>
@@ -123,7 +123,12 @@
 		<version>1.7.3.RELEASE</version>
 	</dependency>
     
-    
+	<!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-rest-webmvc -->
+	<dependency>
+	    <groupId>org.springframework.data</groupId>
+	    <artifactId>spring-data-rest-webmvc</artifactId>
+	    <version>2.6.6.RELEASE</version>
+	</dependency>
     
     
     
@@ -155,32 +160,21 @@
     
     
 	<!-- Json -->
-	<dependency>
-		<groupId>com.fasterxml.jackson.core</groupId>
-		<artifactId>jackson-core</artifactId>
-		<version>${jackson.version}</version>
-	</dependency>
-	<dependency>
-		<groupId>com.fasterxml.jackson.core</groupId>
-		<artifactId>jackson-databind</artifactId>
-		<version>${jackson.version}</version>
-	</dependency>
-		
-<!-- 	<dependency> -->
-<!-- 		<groupId>com.fasterxml.jackson.core</groupId> -->
-<!-- 		<artifactId>jackson-databind</artifactId> -->
-<!-- 		<version>${jackson.version}</version> -->
-<!-- 	</dependency> -->
-	<dependency>
-		<groupId>com.fasterxml.jackson.core</groupId>
-		<artifactId>jackson-databind</artifactId>
-		<version>2.2.3</version>
-	</dependency>
-	<dependency>
-		<groupId>com.fasterxml.jackson.core</groupId>
-		<artifactId>jackson-annotations</artifactId>
-		<version>${jackson.version}</version>
-	</dependency>
+    <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>${jackson.library}</version>
+    </dependency>
+    <dependency>
+        <groupId>com.fasterxml.jackson.dataformat</groupId>
+        <artifactId>jackson-dataformat-xml</artifactId>
+        <version>${jackson.library}</version>
+    </dependency>
+<dependency>
+	<groupId>org.codehaus.woodstox</groupId>
+	<artifactId>woodstox-core-asl</artifactId>
+	<version>4.4.1</version>
+</dependency>
     
     
 
