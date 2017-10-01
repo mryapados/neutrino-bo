@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.neutrinocms.bo.service.light.BackOfficeService;
+import org.neutrinocms.core.conf.NeutrinoCoreProperties;
 import org.neutrinocms.core.controller.AbstractController;
 import org.neutrinocms.core.exception.ControllerException;
 import org.neutrinocms.core.exception.ResourceNotFoundException;
@@ -39,36 +40,36 @@ public abstract class BackOfficeController extends AbstractController {
 	
 	protected static final String BO_LANGUAGE_URL = "language/";
 	
-	protected static final String BO_EDIT_URL = "edit/";
+	protected static final String BO_EDIT_URL = "/edit";
 	protected static final String BO_EDIT_PAGE = "@bo_page_edit";
 	
-	protected static final String BO_VIEW_URL = "view/";
+	protected static final String BO_VIEW_URL = "/view";
 	protected static final String BO_VIEW_PAGE = "@bo_page_view";
 	
-	protected static final String BO_NEW_URL = "new/";
-	protected static final String BO_NEW_TRANSLATION_URL = "new/translation/";
+	protected static final String BO_NEW_URL = "/new";
+	protected static final String BO_NEW_TRANSLATION_URL = "new/translation";
 	
-	protected static final String BO_REMOVES_URL = "removes/";
-	protected static final String BO_REMOVE_URL = "remove/";
+	protected static final String BO_REMOVES_URL = "/removes";
+	protected static final String BO_REMOVE_URL = "/remove";
 	
-	protected static final String BO_LIST_URL = "list/";
+	protected static final String BO_LIST_URL = "/list";
 	protected static final String BO_LIST_PAGE = "@bo_page_list";
 
-	protected static final String BO_BLOCK_LIST_URL = "blocklist/";
+	protected static final String BO_BLOCK_LIST_URL = "/blocklist";
 	protected static final String BO_BLOCK_LIST = "@bo_ng_block_list";
 
 	protected static final String BO_FILE_HOME_URL = "";
 	protected static final String BO_FILE_HOME_PAGE = "@bo_page_file";
-	protected static final String BO_FILE_SINGLE_URL = "single/";
+	protected static final String BO_FILE_SINGLE_URL = "/single";
 	protected static final String BO_FILE_SINGLE_PAGE = "@bo_page_file_single";
-	protected static final String BO_FILE_ADD_URL = "add/";
-	protected static final String BO_FILE_LIST_URL = "list/";
-	protected static final String BO_FILE_REMOVE_URL = "remove/";
-	protected static final String BO_FILE_RENAME_URL = "rename/";
-	protected static final String BO_FILE_MOVE_URL = "move/";
-	protected static final String BO_FILE_DOWNLOAD_URL = "download/";
-	protected static final String BO_FILE_DOWNLOADMULTIPLE_URL = "downloadMultiple/";
-	protected static final String BO_FILE_COMPRESS_URL = "compress/";
+	protected static final String BO_FILE_ADD_URL = "/add";
+	protected static final String BO_FILE_LIST_URL = "/list";
+	protected static final String BO_FILE_REMOVE_URL = "/remove";
+	protected static final String BO_FILE_RENAME_URL = "/rename";
+	protected static final String BO_FILE_MOVE_URL = "/move";
+	protected static final String BO_FILE_DOWNLOAD_URL = "/download";
+	protected static final String BO_FILE_DOWNLOADMULTIPLE_URL = "/downloadMultiple";
+	protected static final String BO_FILE_COMPRESS_URL = "/compress";
 	
 	protected static final Integer BO_MAX_REQUEST_ELEMENT = 1000;
 		
@@ -81,6 +82,9 @@ public abstract class BackOfficeController extends AbstractController {
 	@Autowired
 	protected BackOfficeService backOfficeService;
 	
+	@Autowired
+	protected NeutrinoCoreProperties neutrinoCoreProperties;
+	
 	protected Folder getBOFolder() throws ResourceNotFoundException, ControllerException{
 		try {
 			return common.getFolder(CommonUtil.BACK);
@@ -92,7 +96,7 @@ public abstract class BackOfficeController extends AbstractController {
 	private ModelMap init() throws ServiceException{
 		ModelMap modelMap = new ModelMap();
 		modelMap.addAttribute("langs", langService.findAll());		
-		modelMap.addAttribute("boContext", "/admin");
+		modelMap.addAttribute("boContext", neutrinoCoreProperties.getBoUrl());
 		return modelMap;
 	}
 	

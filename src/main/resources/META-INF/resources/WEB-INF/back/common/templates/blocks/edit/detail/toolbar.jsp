@@ -10,11 +10,11 @@
 		
 			<button type="submit" class="btn btn-success">
 				<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
-				<s:message code="bo.edit.button.save" text="Save" />
+				<s:message htmlEscape="false" code="bo.edit.button.save" text="Save" />
 			</button>
-			<a href="<c:url value='${boContext}/view/?type=${objectType}&id=${objectView.id}' />" class="btn btn-primary">
+			<a href="<c:url value='${boContext}/view?type=${objectType}&id=${objectView.id}' />" class="btn btn-primary">
 				<span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
-				<s:message code="bo.edit.button.cancel" text="Cancel" />
+				<s:message htmlEscape="false" code="bo.edit.button.cancel" text="Cancel" />
 			</a>
 
 		</div>
@@ -23,9 +23,9 @@
 	<div class="btn-group pull-right" role="group" aria-label="...">
 		<div class="btn-group" role="group">
 		
-			<a href="<c:url value='${boContext}/list/?type=${objectType}' />" class="btn btn-primary">
+			<a href="<c:url value='${boContext}/list?type=${objectType}' />" class="btn btn-primary">
 				<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-				<s:message code="bo.edit.button.goback" text="Come back" />
+				<s:message htmlEscape="false" code="bo.edit.button.goback" text="Come back" />
 			</a>
 
 		</div>

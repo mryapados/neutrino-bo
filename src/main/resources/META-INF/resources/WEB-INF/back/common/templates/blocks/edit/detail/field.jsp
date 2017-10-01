@@ -114,6 +114,9 @@
 			<div class="alert alert-danger"><strong>Error !</strong> ${fieldError}</div>
 		</c:if>
 	</c:when>
+	<c:when test="${finalFieldType eq 'DATE'}">
+		<jsp:include page="datetime.jsp" />
+	</c:when>
 	<c:when test="${finalFieldType eq 'DATETIME'}">
 		<jsp:include page="datetime.jsp" />
 	</c:when>
@@ -134,7 +137,7 @@
 	</c:when>
 	<c:when test="${finalFieldType eq 'OBJECT'}">
 		<c:if test="${empty finalObject}">
-			<span class="empty-field"><s:message code="bo.field.empty" text="Empty..." /></span>
+			<span class="empty-field"><s:message htmlEscape="false" code="bo.field.empty" text="Empty..." /></span>
 		</c:if>
 		<c:choose>
 			<c:when test="${finalField.className eq 'Lang'}">
@@ -173,7 +176,7 @@
 		<c:set var="fieldError"><form:errors path="${finalField.name}"/></c:set>
 		<div class="form-group${not empty fieldError ? ' has-error has-feedback' : ''}">
 			<c:forEach var="item" items="${finalField.enumDatas}">
-				<label class="radio-inline"><form:radiobutton path="${finalField.name}" value="${item}" /><s:message code="bo.field.enum.${item}" text="${item}" /></label>
+				<label class="radio-inline"><form:radiobutton path="${finalField.name}" value="${item}" /><s:message htmlEscape="false" code="bo.field.enum.${item}" text="${item}" /></label>
 			</c:forEach>
 		</div>
 		<c:if test="${not empty fieldError}">

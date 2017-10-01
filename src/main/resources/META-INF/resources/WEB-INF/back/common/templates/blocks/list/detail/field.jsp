@@ -29,7 +29,7 @@
 	<c:when test="${finalFieldType eq 'OBJECT'}">
 		<c:choose>
 			<c:when test="${empty finalObject}">
-				<span class="empty-field"><s:message code="bo.field.empty" text="Empty..." /></span>
+				<span class="empty-field"><s:message htmlEscape="false" code="bo.field.empty" text="Empty..." /></span>
 			</c:when>
 			<c:when test="${finalObject.objectType eq 'Lang'}">
 				<span class="lang-sm lang-lbl" lang="${finalObject.code}"></span>

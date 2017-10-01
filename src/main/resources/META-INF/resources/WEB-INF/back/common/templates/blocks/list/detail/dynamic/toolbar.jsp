@@ -23,15 +23,15 @@
 		    
 			<div class="btn-group${position eq 'bottom' ? ' dropup' : ''}" role="group" uib-dropdown >
 			    <button id="${position}-sort-btn" type="button" class="btn btn-default" uib-dropdown-toggle>
-					<s:message var="defaultMessage" code="bo.field.${pFirstSortName}" text="${pFirstSortName}" />
-					<s:message var="fieldName" code="bo.${objectType}.field.${pFirstSortName}" text="${defaultMessage}" />
-					Sort by <strong><c:out value="${fieldName}"/></strong> <span class="caret"></span>
+					<s:message htmlEscape="false" var="defaultMessage" code="bo.field.${pFirstSortName}" text="${pFirstSortName}" />
+					<s:message htmlEscape="false" var="fieldName" code="bo.${objectType}.field.${pFirstSortName}" text="${defaultMessage}" />
+					Sort by <strong>${fieldName}</strong> <span class="caret"></span>
 			    </button>
 				<ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="${position}-sort-btn">
 					<c:forEach var="field" items="${fields}" varStatus="status">
 						<c:if test="${field.inList && field.type ne 'COLLECTION'}">
-							<s:message var="defaultMessage" code="bo.field.${field.name}" text="${field.name}" />
-							<s:message var="fieldName" code="bo.${objectType}.field.${field.name}" text="${defaultMessage}" />
+							<s:message htmlEscape="false" var="defaultMessage" code="bo.field.${field.name}" text="${field.name}" />
+							<s:message htmlEscape="false" var="fieldName" code="bo.${objectType}.field.${field.name}" text="${defaultMessage}" />
 							<li>
 								<a href="#" data-ng-click="updateUrlPageableSort('${field.name},${pFirstSortDirection}')">${fieldName}</a>
 							</li>

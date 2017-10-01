@@ -80,7 +80,7 @@
 				</c:forEach>
 				<c:if test="${size > finalMaxElement}">
 					<li>
-						<strong><a href="#"><c:out value="${size - finalMaxElement}"/> <s:message code="bo.otherresults" text="Others results..." /></a></strong>
+						<strong><a href="#"><c:out value="${size - finalMaxElement}"/> <s:message htmlEscape="false" code="bo.otherresults" text="Others results..." /></a></strong>
 					</li>
 				</c:if>
 			</ul>

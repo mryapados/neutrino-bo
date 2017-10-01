@@ -14,7 +14,7 @@
 			ng-model="dt"
 			is-open="popup1.opened" 
 			datepicker-options="dateOptions"
-			ng-required="true" 
+			ng-required="false" 
 			close-text="Close"
 			alt-input-formats="altInputFormats" 
 		/>

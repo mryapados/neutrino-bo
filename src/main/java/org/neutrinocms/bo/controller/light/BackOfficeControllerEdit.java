@@ -3,6 +3,8 @@ package org.neutrinocms.bo.controller.light;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.apache.log4j.Logger;
+import org.neutrinocms.bo.templatecontroller.BOBlockController;
 import org.neutrinocms.core.bean.NData;
 import org.neutrinocms.core.conf.NeutrinoCoreProperties;
 import org.neutrinocms.core.exception.ControllerException;
@@ -26,10 +28,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class BackOfficeControllerEdit extends BackOfficeController {
+	private Logger logger = Logger.getLogger(BOBlockController.class);
+	
 	@Autowired
 	NeutrinoCoreProperties neutrinoCoreProperties;
 	
-	protected static final String REDIRECT = "redirect:/";
+	protected static final String REDIRECT = "redirect:";
 	protected static final String REDIRECT_TYPE = "type";
 	protected static final String REDIRECT_ID = "id";
 	
@@ -155,9 +159,10 @@ public class BackOfficeControllerEdit extends BackOfficeController {
 		try {
 			Lang lang = langService.findByCode(langCode);
 			if (lang == null) throw new ResourceNotFoundException(langCode + " Not found !");	
-
+			
 			ModelAndView modelAndView = null;
 			if (result.hasErrors()) {
+				logger.warn(result.getAllErrors());
 				modelAndView = edit(type, null, lang, true);
 			} else{
 				try {

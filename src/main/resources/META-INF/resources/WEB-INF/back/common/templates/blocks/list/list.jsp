@@ -11,24 +11,24 @@
 <jsp:include page="detail/${displayType}/init.jsp" />
 <div class="list-object">
 	<h1>
-		<s:message code="bo.list" text="${objectType}" />
-		<s:message code="bo.${objectType}.entity.name" text="${objectType}" />		
+		<s:message htmlEscape="false" code="bo.list" text="${objectType}" />
+		<s:message htmlEscape="false" code="bo.${objectType}.entity.name" text="${objectType}" />		
 	</h1>
 	
 	<c:if test="${not empty error}">
 		<div class="alert alert-danger alert-dismissable">
-			<strong><s:message code="bo.error.remove" text="Remove error : " /></strong><br />
+			<strong><s:message htmlEscape="false" code="bo.error.remove" text="Remove error : " /></strong><br />
 			${error.message}
 		</div>
 	</c:if>
 	<c:if test="${not empty success && success}">
 		<div class="alert alert-success alert-dismissable">
-			<strong><s:message code="bo.success.remove" text="The item has been removed." /></strong><br />
+			<strong><s:message htmlEscape="false" code="bo.success.remove" text="The item has been removed." /></strong><br />
 			${error.message}
 		</div>
 	</c:if>
 		
-	<c:url var="deleteUrl" value="${boContext}/removes/?type=${objectType}"/>
+	<c:url var="deleteUrl" value="${boContext}/removes?type=${objectType}"/>
 	<form:form id="delete" action="${deleteUrl}" method="post">
 		<div class="panel-group">
 			<div class="panel panel-primary">
@@ -45,11 +45,11 @@
 						<thead>
 							<tr>
 								<th><input type="checkbox" id="select_all"></th>
-								<th><s:message code="bo.field.action" text="Action" /></th>
+								<th><s:message htmlEscape="false" code="bo.field.action" text="Action" /></th>
 								<c:forEach var="field" items="${fields}" varStatus="status">
 									<c:if test="${field.inList}">
-										<s:message var="defaultMessage" code="bo.field.${field.name}" text="${field.name}" />
-										<th><s:message code="bo.${objectType}.field.${field.name}" text="${defaultMessage}" /></th>
+										<s:message htmlEscape="false" var="defaultMessage" code="bo.field.${field.name}" text="${field.name}" />
+										<th><s:message htmlEscape="false" code="bo.${objectType}.field.${field.name}" text="${defaultMessage}" /></th>
 									</c:if>
 								</c:forEach>
 							</tr>
@@ -58,16 +58,16 @@
 							<c:forEach var="objectView" items="${datas}" varStatus="status">
 								<tr>
 									<td>
-										<input type="checkbox" name="id" value="${object.id}"/>
+										<input type="checkbox" name="id" value="${objectView.id}"/>
 									</td>
 									<td class="text-center">
-										<c:url var="url" value="${boContext}/edit/" scope="request">
+										<c:url var="url" value="${boContext}/edit" scope="request">
 											<c:param name="type" value="${objectType}"/>
 											<c:param name="id" value="${objectView.id}"/>
 										</c:url>
 										<a href="<%= request.getAttribute("url") %>" title="edit"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
 										&nbsp
-										<c:url var="url" value="${boContext}/view/" scope="request">
+										<c:url var="url" value="${boContext}/view" scope="request">
 											<c:param name="type" value="${param.type}"/>
 											<c:param name="id" value="${objectView.id}"/>
 										</c:url>

@@ -18,6 +18,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.PersistenceContext;
+import javax.validation.constraints.NotNull;
 
 import org.apache.log4j.Logger;
 import org.neutrinocms.core.bean.NData;
@@ -31,6 +32,7 @@ import org.neutrinocms.core.bo.annotation.BOResources;
 import org.neutrinocms.core.bo.annotation.BOViewUrl;
 import org.neutrinocms.core.constant.CacheConst;
 import org.neutrinocms.core.exception.ServiceException;
+import org.neutrinocms.core.exception.UtilException;
 import org.neutrinocms.core.model.IdProvider;
 import org.neutrinocms.core.model.notranslation.NoTranslation;
 import org.neutrinocms.core.model.translation.Lang;
@@ -40,6 +42,7 @@ import org.neutrinocms.core.service.TranslationService;
 import org.neutrinocms.core.util.CommonUtil;
 import org.neutrinocms.core.util.EntityLocator;
 import org.neutrinocms.core.util.IdProviderUtil;
+import org.neutrinocms.core.util.NFieldUtil;
 import org.neutrinocms.core.util.ServiceLocator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -82,6 +85,9 @@ public class BackOfficeService {
 	@Autowired
 	private  IdProviderUtil idProviderUtil;
 	
+	@Autowired
+	private  NFieldUtil nFieldUtil;
+		
 	
 	private Logger logger = Logger.getLogger(BackOfficeService.class);
 		
@@ -118,7 +124,7 @@ public class BackOfficeService {
 	}
 	
 
-	private NField mkNFieldFromBOField(Field field, BOField nType){
+	private NField mkNFieldFromBOField(Field field, BOField nType, boolean mandatory){
 		List<String> enumDatas = null;
 		if (!nType.ofEnum().equals(BOField.Default.class)){
 			enumDatas = new ArrayList<>();
@@ -141,7 +147,7 @@ public class BackOfficeService {
 	    	className = clazz.getSimpleName();
 	    }
 	    
-		NField nField = new NField(field, nType.type(), nType.ofType(), field.getName(), clazz, className, ofClassName, nType.inList(), nType.inView(), nType.editable(), nType.sortBy(), nType.sortPriority(), nType.defaultField(), nType.displayOrder(), nType.tabName(), nType.groupName(), enumDatas, nType.defaultValue());
+		NField nField = new NField(field, nType.type(), nType.ofType(), field.getName(), clazz, className, ofClassName, nType.inList(), nType.inView(), nType.editable(), mandatory, nType.sortBy(), nType.sortPriority(), nType.defaultField(), nType.displayOrder(), nType.tabName(), nType.groupName(), enumDatas, nType.defaultValue());
 	
 		String reverseJoin = null;
 		Boolean reverseIsCollection = null;
@@ -178,7 +184,8 @@ public class BackOfficeService {
 		for (Field field : fields) {
 			BOField nType = field.getAnnotation(BOField.class);
 			if (nType != null){
-				nfFields.add(mkNFieldFromBOField(field, nType));
+				NotNull mandatory = field.getAnnotation(NotNull.class);
+				nfFields.add(mkNFieldFromBOField(field, nType, mandatory != null));
 			}
 		}
 		return nfFields;
@@ -191,7 +198,8 @@ public class BackOfficeService {
 		if (field == null) return null;
 		BOField nType = field.getAnnotation(BOField.class);
 		if (nType != null){
-			return mkNFieldFromBOField(field, nType);
+			NotNull mandatory = field.getAnnotation(NotNull.class);
+			return mkNFieldFromBOField(field, nType, mandatory != null);
 		}
 		return null;
 	}
@@ -206,6 +214,7 @@ public class BackOfficeService {
 		for (Field field : fields) {
 			BOField nType = field.getAnnotation(BOField.class);
 			if (nType != null){
+				NotNull mandatory = field.getAnnotation(NotNull.class);
 				if (!nfTabsGroupsFields.containsKey(nType.tabName())){
 					nfTabsGroupsFields.put(nType.tabName(), new HashMap<>());
 				}
@@ -215,7 +224,7 @@ public class BackOfficeService {
 					nfGroupsFields.put(nType.groupName(), new ArrayList<>());
 				}
 				List<NField> nfFields = nfGroupsFields.get((nType.groupName()));
-				nfFields.add(mkNFieldFromBOField(field, nType));
+				nfFields.add(mkNFieldFromBOField(field, nType, mandatory != null));
 			}
 		}
 		return nfTabsGroupsFields;
@@ -346,15 +355,28 @@ public class BackOfficeService {
 //		}
 //	}
 	
-	@SuppressWarnings("unchecked")
+
+	
+	
 	public NData<IdProvider> add(Class<?> entity) throws ServiceException {
 		try {
 			List<Field> fields = getFields(entity);
 			Map<String, Map<String, List<NField>>> nMapFields = getMapNField(fields);
-			return new NData<IdProvider>(nMapFields, (IdProvider) entity.newInstance());
+			
+			IdProvider data = (IdProvider) entity.newInstance();
+			List<NField> nFields = getNFields(entity);
+			for (NField nField : nFields) {
+				if (nField.getDefaultValue()!= null && !nField.getDefaultValue().equals("")){
+					setFieldValue(data, nField.getField(), nFieldUtil.defaultValueToFieldType(nField));
+				}
+			}
+			
+			return new NData<IdProvider>(nMapFields, data);
 		} catch (InstantiationException e) {
 			throw new ServiceException("add -> Error", e) ;
 		} catch (IllegalAccessException e) {
+			throw new ServiceException("add -> Error", e) ;
+		} catch (UtilException e) {
 			throw new ServiceException("add -> Error", e) ;
 		}
 	}
@@ -375,16 +397,31 @@ public class BackOfficeService {
 //	}
 	
 	private IdProvider completeData(Class<?> entity, IdProvider data, List<NField> nFields, IdProvider origin) throws ServiceException{
+//		// get data original if id != null
+//		IdProvider result = data;
+//		// for each field not editable, set original value to data field
+//		for (NField nField : nFields) {
+//			if (!nField.isEditable()){
+//				Field field = nField.getField();
+//				setFieldValue(result, field, getFieldValue(origin, field));
+//			}
+//		}
+//		return result;
+		
+		
+		
 		// get data original if id != null
-		IdProvider result = data;
-		// for each field not editable, set original value to data field
+		IdProvider result = origin;
+		// for each field editable, set new value in field
 		for (NField nField : nFields) {
-			if (!nField.isEditable()){
+			if (nField.isEditable()){
 				Field field = nField.getField();
-				setFieldValue(result, field, getFieldValue(origin, field));
+				setFieldValue(result, field, getFieldValue(data, field));
 			}
 		}
 		return result;
+		
+		
 	}
 	
 	private IdProvider persistData(Class<?> entity, IdProvider data) throws ServiceException{

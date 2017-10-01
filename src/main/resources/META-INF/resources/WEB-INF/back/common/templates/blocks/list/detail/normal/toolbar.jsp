@@ -43,15 +43,15 @@
 		    
 			<div class="btn-group${position eq 'bottom' ? ' dropup' : ''}" role="group" uib-dropdown >
 			    <button id="${position}-sort-btn" type="button" class="btn btn-default" uib-dropdown-toggle>
-					<s:message var="defaultMessage" code="bo.field.${pFirstSortName}" text="${pFirstSortName}" />
-					<s:message var="fieldName" code="bo.${objectType}.field.${pFirstSortName}" text="${defaultMessage}" />
-					Sort by <strong><c:out value="${fieldName}"/></strong> <span class="caret"></span>
+					<s:message htmlEscape="false" var="defaultMessage" code="bo.field.${pFirstSortName}" text="${pFirstSortName}" />
+					<s:message htmlEscape="false" var="fieldName" code="bo.${objectType}.field.${pFirstSortName}" text="${defaultMessage}" />
+					Sort by <strong>${fieldName}</strong> <span class="caret"></span>
 			    </button>
 				<ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="${position}-sort-btn">
 					<c:forEach var="field" items="${fields}" varStatus="status">
 						<c:if test="${field.inList && field.type ne 'COLLECTION'}">
-							<s:message var="defaultMessage" code="bo.field.${field.name}" text="${field.name}" />
-							<s:message var="fieldName" code="bo.${objectType}.field.${field.name}" text="${defaultMessage}" />
+							<s:message htmlEscape="false" var="defaultMessage" code="bo.field.${field.name}" text="${field.name}" />
+							<s:message htmlEscape="false" var="fieldName" code="bo.${objectType}.field.${field.name}" text="${defaultMessage}" />
 							<li>
 								<jsp:include page="../url.jsp">
 									<jsp:param name="sort" value="${field.name},${pFirstSortDirection}" />
@@ -86,6 +86,13 @@
 				</button>
 
 
+				<c:if test="${objectBaseType eq 'Translation'}">
+					<div class="btn-group${position eq 'bottom' ? ' dropup' : ''}" role="group" uib-dropdown >
+						<jsp:include page="../../../common/addlanguage.jsp"/>
+					</div>
+				</c:if>
+
+
 				<c:choose>
 					<c:when test="${objectBaseType eq 'Translation'}">
 						<div class="btn-group${position eq 'bottom' ? ' dropup' : ''}" role="group" uib-dropdown >
@@ -95,18 +102,18 @@
 		                    <ul uib-dropdown-menu class="dropdown-menu" role="menu">
 								<c:forEach var="item" items="${langs}" varStatus="status">
 									<li>
-										<c:url var="url" value="${boContext}/new/translation/" scope="request">
+										<c:url var="url" value="${boContext}/new/translation" scope="request">
 											<c:param name="type" value="${objectType}"/>
 											<c:param name="lg" value="${item.code}"/>
 										</c:url>
-										<a href="${url}"><span class="lang-sm lang-lbl-full" lang="${item.code}"></span></a>
+										<a href="<%= request.getAttribute("url") %>"><span class="lang-sm lang-lbl-full" lang="${item.code}"></span></a>
 									</li>
 								</c:forEach>
 		                    </ul>
 						</div>
 					</c:when>
 					<c:otherwise>
-						<c:url var="url" value="${boContext}/new/" scope="request">
+						<c:url var="url" value="${boContext}/new" scope="request">
 							<c:param name="type" value="${objectType}"/>
 						</c:url>
 						<a href="${url}" role="button" class="btn btn-primary">

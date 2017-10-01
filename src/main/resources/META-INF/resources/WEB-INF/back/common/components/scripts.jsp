@@ -44,18 +44,87 @@
 <%-- <script src="<c:url value='/resources/src/bo/js/directives/uiAssignment.js'/>"></script> --%>
 <%-- <script src="<c:url value='/resources/src/bo/js/directives/uiFile.js'/>"></script> --%>
 
+<c:url var="apiUrl" value="${boContext}"/>
 <c:url var="templateUrl" value="/resources/src/bo/js/templates"/>
 <c:url var="i18nUrl" value="/resources/src/bo/js/i18n"/>
 <c:url var="fileUrl" value="/files"/>
 <script>
 	angular.module('boApp').config(['boConfigProvider', function (config) {
-    var defaults = config.$get();
-    config.set({
-    	basePath: '${pageContext.request.contextPath}',
-    	tplPath: '${templateUrl}',
-    	i18nPath: '${i18nUrl}',
-        filePath: '${fileUrl}'
-    });
-    
-  }]);
+	    var defaults = config.$get();
+	    config.set({
+	    	basePath: '${pageContext.request.contextPath}',
+	    	tplPath: '${templateUrl}',
+	    	i18nPath: '${i18nUrl}',
+	        filePath: '${fileUrl}'
+	    });
+ 	}]);
+	
+	angular.module('FileManagerApp').config(['fileManagerConfigProvider', function (config) {
+		var defaults = config.$get();
+		config.set({
+		  appName: 'Neutrino',
+		  
+		  listUrl: '${apiUrl}/file/list',
+		  uploadUrl: '${apiUrl}/file/add',
+		  renameUrl: '${apiUrl}/file/rename',
+		  copyUrl: 'bridges/php/handler.php',
+		  moveUrl: '${apiUrl}/file/move',
+		  removeUrl: '${apiUrl}/file/remove',
+		  editUrl: 'bridges/php/handler.php',
+		  getContentUrl: 'bridges/php/handler.php',
+		  createFolderUrl: 'bridges/php/handler.php',
+		  downloadFileUrl: '${apiUrl}/file/download',
+		  downloadMultipleUrl: '${apiUrl}/downloadMultiple',
+		  compressUrl: '${apiUrl}/file/compress',
+		  extractUrl: 'bridges/php/handler.php',
+		  permissionsUrl: 'bridges/php/handler.php',
+		  
+		  pickCallback: function(item) {
+		    var msg = 'Picked %s "%s" for external use'
+		      .replace('%s', item.type)
+		      .replace('%s', item.fullPath());
+		    window.alert(msg);
+		  },
+		
+		  searchForm: false,
+		  sidebar: true,
+		  breadcrumb: true,
+		  navbar: true,
+		  multiSelect:true,
+		  allowedActions: {
+		      upload: true,
+		      rename: true,
+		      move: true,
+		      copy: true,
+		      edit: true,
+		      changePermissions: true,
+		      compress: true,
+		      compressChooseName: true,
+		      extract: true,
+		      download: true,
+		      downloadMultiple: true,
+		      preview: true,
+		      remove: true,
+		      createFolder: true,
+		      pickFiles: false,
+		      pickFolders: false
+		  },
+		  
+		  
+		  multipleDownloadFileName: 'angular-filemanager.zip',
+		  showExtensionIcons: true,
+		  showSizeForDirectories: false,
+		  useBinarySizePrefixes: false,
+		  downloadFilesByAjax: true,
+		  previewImagesInModal: true,
+		  enablePermissionsRecursive: true,
+		  compressAsync: false,
+		  extractAsync: false,
+		  pickCallback: null,
+		
+		  //tplPath: '/neutrino-resume/resources/src/lib/bower_components/angular-filemanager/src/templates',
+	   });
+	      
+	 }]);
+	
 </script>

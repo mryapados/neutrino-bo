@@ -8,13 +8,13 @@
 <jsp:include page="detail/init.jsp" />
 <div class="view-object">
 	<h1>
-		<s:message code="bo.view" text="${objectType}" />
-		<s:message code="bo.${objectType}.entity.name" text="${objectType}" />
+		<s:message htmlEscape="false" code="bo.view" text="${objectType}" />
+		<s:message htmlEscape="false" code="bo.${objectType}.entity.name" text="${objectType}" />
 	</h1>
 	
 	<c:if test="${not empty error}">
 		<div class="alert alert-danger alert-dismissable">
-			<strong><s:message code="bo.error.remove" text="Remove error : " /></strong><br />
+			<strong><s:message htmlEscape="false" code="bo.error.remove" text="Remove error : " /></strong><br />
 			${error.message}
 		</div>
 	</c:if>
@@ -36,14 +36,14 @@
 					<div class="row info">
 						<div class="col-md-6 col-xs-12 text-left">
 							<c:if test="${not empty objectName}">
-								<s:message code="bo.field.name" text="Name" /> : <span>${objectName}</span>
+								<s:message htmlEscape="false" code="bo.field.name" text="Name" /> : <span>${objectName}</span>
 							</c:if>
 						</div>
 						<ul class="col-md-6 col-xs-12 text-right">
 							<li>Status : to do workflow</li>
 							<li>
 								<c:if test="${not empty objectLang}">
-									<s:message code="bo.field.lang" text="Lang" /> : <span class="lang-sm lang-lbl" lang="${objectLang.code}"></span>
+									<s:message htmlEscape="false" code="bo.field.lang" text="Lang" /> : <span class="lang-sm lang-lbl" lang="${objectLang.code}"></span>
 								</c:if>
 							</li>
 						</ul>
@@ -63,8 +63,8 @@
 								<c:if test="${field.inView}">
 									<tr>
 										<td class="col-md-3">
-											<s:message var="defaultMessage" code="bo.field.${field.name}" text="${field.name}" />
-											<s:message code="bo.${objectType}.field.${field.name}" text="${defaultMessage}" />
+											<s:message htmlEscape="false" var="defaultMessage" code="bo.field.${field.name}" text="${field.name}" />
+											<s:message htmlEscape="false" code="bo.${objectType}.field.${field.name}" text="${defaultMessage}" />
 										</td>
 										<td>
 											<c:set var="finalParentObject" value="${objectView}" scope="request" />

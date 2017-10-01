@@ -37,10 +37,10 @@
                         <span class="fa fa-user fa-fw"></span> <span class="fa fa-caret-down"></span>
                     </a>
                     <ul uib-dropdown-menu class="dropdown-menu dropdown-user">
-                        <li><a href="#"><span class="fa fa-user fa-fw"></span> <s:message code="bo.connexion.user-profile" /></a></li>
-                        <li><a href="#"><span class="fa fa-gear fa-fw"></span> <s:message code="bo.connexion.settings" /></a></li>
+                        <li><a href="#"><span class="fa fa-user fa-fw"></span> <s:message htmlEscape="false" code="bo.connexion.user-profile" /></a></li>
+                        <li><a href="#"><span class="fa fa-gear fa-fw"></span> <s:message htmlEscape="false" code="bo.connexion.settings" /></a></li>
                         <li class="divider"></li>
-                        <li><a href="<c:url value='/logout'/>"><span class="fa fa-sign-out fa-fw"></span> <s:message code="bo.connexion.logout" /></a></li>
+                        <li><a href="<c:url value='/logout'/>"><span class="fa fa-sign-out fa-fw"></span> <s:message htmlEscape="false" code="bo.connexion.logout" /></a></li>
                     </ul>
                 </li>
                 

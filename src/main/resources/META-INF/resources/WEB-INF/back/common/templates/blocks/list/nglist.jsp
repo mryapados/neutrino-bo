@@ -26,11 +26,11 @@
 			<thead>
 				<tr>
 					<th><input type="checkbox" id="select_all"></th>
-					<th><s:message code="bo.field.action" text="Action" /></th>
+					<th><s:message htmlEscape="false" code="bo.field.action" text="Action" /></th>
 					<c:forEach var="field" items="${fields}" varStatus="status">
 						<c:if test="${field.inList}">
-							<s:message var="defaultMessage" code="bo.field.${field.name}" text="${field.name}" />
-							<th><s:message code="bo.${objectType}.field.${field.name}" text="${defaultMessage}" /></th>
+							<s:message htmlEscape="false" var="defaultMessage" code="bo.field.${field.name}" text="${field.name}" />
+							<th><s:message htmlEscape="false" code="bo.${objectType}.field.${field.name}" text="${defaultMessage}" /></th>
 						</c:if>
 					</c:forEach>
 				</tr>
